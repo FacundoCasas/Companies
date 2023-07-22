@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByDateOfTransactionAfter(LocalDate date);
+    List<Transaction> findByTransactionDateAfter(LocalDate date);
 }

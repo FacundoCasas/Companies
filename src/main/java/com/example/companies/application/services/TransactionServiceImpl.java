@@ -18,7 +18,7 @@ public class TransactionServiceImpl implements TransactionService{
     }
     @Override
     public List<Transaction> findByDateOfTransactionAfter(LocalDate date) {
-        return transactionRepository.findByDateOfTransactionAfter(date);
+        return transactionRepository.findByTransactionDateAfter(date);
     }
 
 }
