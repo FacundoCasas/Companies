@@ -25,11 +25,14 @@ public class CompanyControllerImpl implements CompanyController {
         return ResponseEntity.ok(savedCompany);
     }
 
-    //TODO: hacer que pueda pasarse la cantidad de meses a subtraer por parametro
-    @GetMapping("/last-month")
-    public ResponseEntity<List<Company>> getCompaniesLastMonth() {
-        List<Company> companiesLastMonth = companyService.findByDateOfAccessionAfter(DateUtils.subtractMonthsFromToday(1));
-        return ResponseEntity.ok(companiesLastMonth);
+    @GetMapping("/last-adhesion")
+    public ResponseEntity<List<Company>> getCompaniesByLastAdhesion(@RequestParam int months) {
+        return ResponseEntity.ok(companyService.getCompaniesByLastAdhesion(DateUtils.subtractMonthsFromToday(months)));
+    }
+
+    @GetMapping("/last-transaction")
+    public ResponseEntity<List<Company>> getCompaniesByLastTransaction(@RequestParam int months) {
+        return ResponseEntity.ok(companyService.getCompaniesByLastTransaction(DateUtils.subtractMonthsFromToday(months)));
     }
 
     @Override

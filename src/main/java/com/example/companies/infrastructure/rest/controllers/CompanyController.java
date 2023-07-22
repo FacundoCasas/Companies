@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CompanyController {
     ResponseEntity<Company> createCompany(Company company);
-    ResponseEntity<List<Company>> getCompaniesLastMonth();
+    ResponseEntity<List<Company>> getCompaniesByLastAdhesion(int months);
+    ResponseEntity<List<Company>> getCompaniesByLastTransaction(int months);
     ResponseEntity<List<Company>> findAllCompanies();
 }
