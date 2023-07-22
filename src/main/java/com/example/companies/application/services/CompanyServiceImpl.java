@@ -1,5 +1,7 @@
 package com.example.companies.application.services;
 
+import com.example.companies.application.dto.CompanyDTO;
+import com.example.companies.application.mapper.CompanyMapper;
 import com.example.companies.domain.models.Transaction;
 import com.example.companies.infrastructure.repositories.CompanyRepository;
 import com.example.companies.domain.models.Company;
@@ -23,14 +25,14 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company saveCompany(Company company) {
+    public Company saveCompany(CompanyDTO companyDTO) {
         //TODO: logica de que no tenga repetido el CUIT, revisar si ponerlo en el Entity y atrapar el error que tira con un try catch
-        return companyRepository.save(company);
+        return companyRepository.save(CompanyMapper.INSTANCE.companyDTOToCompany(companyDTO));
     }
 
     @Override
-    public List<Company> getCompaniesByLastAdhesion(LocalDate date) {
-        return companyRepository.findByDateOfAccessionAfter(date);
+    public List<CompanyDTO> getCompaniesByLastAdhesion(LocalDate date) {
+        return CompanyMapper.INSTANCE.companiesToCompanyDTOs(companyRepository.findByDateOfAccessionAfter(date));
     }
 
     /**
@@ -40,14 +42,14 @@ public class CompanyServiceImpl implements CompanyService {
      * @return Una lista de empresas que tienen transacciones posteriores a la fecha especifica.
      */
     @Override
-    public List<Company> getCompaniesByLastTransaction(LocalDate date) {
+    public List<CompanyDTO> getCompaniesByLastTransaction(LocalDate date) {
         List<Transaction> transactionsAfterDate = transactionServiceImpl.findByDateOfTransactionAfter(date);
-        return extractCompaniesFromTransactions(transactionsAfterDate);
+        return CompanyMapper.INSTANCE.companiesToCompanyDTOs(extractCompaniesFromTransactions(transactionsAfterDate));
     }
 
     @Override
-    public List<Company> findAllCompanies() {
-        return companyRepository.findAll();
+    public List<CompanyDTO> findAllCompanies() {
+        return CompanyMapper.INSTANCE.companiesToCompanyDTOs(companyRepository.findAll());
     }
 
     /**

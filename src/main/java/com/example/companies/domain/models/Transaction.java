@@ -25,5 +25,4 @@ public class Transaction {
     private LocalDate transactionDate;
     private int debitAccount;
     private int creditAccount;
-    //TODO: company que recibe la transaccion
 }
