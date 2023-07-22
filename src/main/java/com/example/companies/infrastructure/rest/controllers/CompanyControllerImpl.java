@@ -1,12 +1,13 @@
 package com.example.companies.infrastructure.rest.controllers;
 
+import com.example.companies.application.utils.DateUtils;
 import com.example.companies.domain.models.Company;
 import com.example.companies.application.services.CompanyService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/companies")
@@ -24,5 +25,18 @@ public class CompanyControllerImpl implements CompanyController {
         return ResponseEntity.ok(savedCompany);
     }
 
-    // Implementar otros métodos del controlador para leer, actualizar y eliminar compañías según sea necesario
+    //TODO: hacer que pueda pasarse la cantidad de meses a subtraer por parametro
+    @GetMapping("/last-month")
+    public ResponseEntity<List<Company>> getCompaniesLastMonth() {
+        List<Company> companiesLastMonth = companyService.findByDateOfAccessionAfter(DateUtils.subtractMonthsFromToday(1));
+        return ResponseEntity.ok(companiesLastMonth);
+    }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<List<Company>> findAllCompanies() {
+        List<Company> companies = companyService.findAllCompanies();
+        return ResponseEntity.ok(companies);
+    }
+
 }
