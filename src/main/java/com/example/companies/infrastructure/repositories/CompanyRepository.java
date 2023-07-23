@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     List<Company> findByDateOfAccessionAfter(LocalDate date);
+
+    boolean existsByCuit(String cuit);
+    boolean existsById(Long id);
 }

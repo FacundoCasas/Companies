@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CompanyController {
-    @Operation(summary = "Crea una nueva Empresa")
+    @Operation(summary = "Crea una nueva Empresa",description = "Crea una nueva Empresa y verifica que no exista previamente el cuit ingresado en la base de datos")
     ResponseEntity<Company> createCompany(CompanyDTO company);
     @Operation(summary = "Busca las Empresas que han adherido los ultimos meses")
     ResponseEntity<List<CompanyDTO>> getCompaniesByLastAdhesion(@Parameter(description = "Cantidad de meses para la busqueda") int months);

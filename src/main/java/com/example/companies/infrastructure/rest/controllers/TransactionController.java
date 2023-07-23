@@ -6,6 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 
 public interface TransactionController {
-    @Operation(summary = "Crea una nueva Transacción")
+    @Operation(summary = "Crea una nueva Transacción",description = "Crea una nueva Transacción y verifica que exista la Empresa en la base de datos")
     ResponseEntity<Transaction> createCompany(TransactionDTO transaction);
 }

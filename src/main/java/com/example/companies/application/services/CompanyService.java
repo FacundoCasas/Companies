@@ -14,4 +14,5 @@ public interface CompanyService {
     public List<CompanyDTO> getCompaniesByLastTransaction(LocalDate date);
     public List<CompanyDTO> findAllCompanies();
 
+    Boolean existsById(Long id);
 }

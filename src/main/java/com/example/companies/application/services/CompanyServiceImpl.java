@@ -1,6 +1,7 @@
 package com.example.companies.application.services;
 
 import com.example.companies.application.dto.CompanyDTO;
+import com.example.companies.application.exceptions.CompanyAlreadyExistsException;
 import com.example.companies.application.mapper.CompanyMapper;
 import com.example.companies.domain.models.Transaction;
 import com.example.companies.infrastructure.repositories.CompanyRepository;
@@ -26,7 +27,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company saveCompany(CompanyDTO companyDTO) {
-        //TODO: logica de que no tenga repetido el CUIT, revisar si ponerlo en el Entity y atrapar el error que tira con un try catch
+        if (companyRepository.existsByCuit(companyDTO.getCuit())) {
+            throw new CompanyAlreadyExistsException("La empresa con el CUIT proporcionado ya existe.");
+        }
         return companyRepository.save(CompanyMapper.INSTANCE.companyDTOToCompany(companyDTO));
     }
 
@@ -50,6 +53,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyDTO> findAllCompanies() {
         return CompanyMapper.INSTANCE.companiesToCompanyDTOs(companyRepository.findAll());
+    }
+
+    @Override
+    public Boolean existsById(Long id){
+        return companyRepository.existsById(id);
     }
 
     /**
